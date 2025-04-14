@@ -1,0 +1,25 @@
+POST http://localhost:3333/create/user/v1
+Content-Type: application/json
+
+{
+    "nome": "Bianca",
+    "email": "bia@gmail.com",
+    "senha": "123456"
+}
+
+###
+GET http://localhost:3333/list/users/v1
+
+###
+POST http://localhost:3333/login/v1
+Content-Type: application/json
+
+{
+     "email": "bia@gmail.com",
+    "senha": "123456"
+}
+
+
+###
+GET http://localhost:3333/user/data/v1/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzQ0NTgwNDg1LCJleHAiOjE3NDQ1ODEzODV9.Na9pGG8ECTn5c_7H0HuXVtssVJmBYxCcYeV8qTd2W0g
