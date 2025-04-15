@@ -1,6 +1,7 @@
 import { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import z from "zod";
 import { db } from "../bd/client";
+import { AuthService } from "../services/AuthService";
 
 export const LoginUser: FastifyPluginAsyncZod = async (server) => {
     server.post("/login/v1", {
@@ -11,13 +12,12 @@ export const LoginUser: FastifyPluginAsyncZod = async (server) => {
             })
         }
     }, async (request, reply) => {
+
+        const authService =  new AuthService(server.jwt);
+
         const {email, senha} = request.body;
 
-        const user = db.Users.find(user => user.email === email && user.senha === senha);
-        if (!user) {return reply.status(401).send({message: "Usuario não encontrado!"})}
-
-        const acessToken = server.jwt.sign({sub: user.id}, {expiresIn: "15min"});
-        const refreshToken = server.jwt.sign({sub: user.id}, {expiresIn: "7d"});
+        const {refreshToken, acessToken} = await authService.Login(email, senha);
         
         reply.setCookie("refreshToken", refreshToken, {
             httpOnly: true,
