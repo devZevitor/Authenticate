@@ -18,4 +18,4 @@ export default fp(async (server: FastifyInstance) => {
             return reply.status(500).send({error: "Não autorizado!"})
         }
     })
-})
+})  
